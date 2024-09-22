@@ -1,16 +1,25 @@
-import { auth, signOut } from "@/auth";
+import { signOut } from "@/auth";
 
 const SettingsPage = async () => {
-    const session = await auth();
     return (
         <div>
-            {JSON.stringify(session)}
-            <form action={async () => {
-                "use server";
-                await signOut();
-            }}>
-                <button type="submit">Sign out</button>
+            <form
+                action={async () => {
+                    "use server";
+                    await signOut();
+                }}
+                className="flex justify-end p-4"
+            >
+                <button
+                    type="submit"
+                    className="bg-sky-200 text-white text-sm px-2 py-1 rounded hover:bg-sky-600"
+                >
+                    Sign out
+                </button>
             </form>
+            <div className="flex justify-center items-center">
+                <img src="89f9e11aca7a61f5db2ac315bb0aa3bb1942011.gif@!web-article-pic.webp" />
+            </div>
         </div>
     );
 }
