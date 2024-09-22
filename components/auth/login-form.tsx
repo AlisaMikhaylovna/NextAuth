@@ -1,10 +1,11 @@
 "use client"
 
-import { CardWrapper } from "./card-wrapper";
+import { CardWrapper } from "@/components/auth/card-wrapper";
 import { LoginSchema } from "@/schemas";
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
 
 import {
     Form,
@@ -19,11 +20,16 @@ import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
 import { useState, useTransition } from "react";
 import { login } from "@/actions/login";
+import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 export const LoginForm = () => {
+    const route = useRouter();
+    const serachParams = useSearchParams();
+    const urlError = serachParams.get("error") === "OAuthAccountNotLinked" ? "Email already is in use" : "";
     const [isPending, startTransition] = useTransition();
-    const [error, setError] = useState<string | undefined>("");
-    const [success, setSuccess] = useState<string | undefined>("");
+    const [error, setError] = useState<string | undefined>();
+    const [success, setSuccess] = useState<string | undefined>();
     const form = useForm<z.infer<typeof LoginSchema>>({
         resolver: zodResolver(LoginSchema),
         defaultValues: {
@@ -36,12 +42,17 @@ export const LoginForm = () => {
         setError("");
         setSuccess("");
         startTransition(() => {
-            login(values).then(data =>
-                setError(data?.error)
+            login(values).then(data => {
+                if (!data) {
+                    route.push(DEFAULT_LOGIN_REDIRECT);
+                } else {
+                    setError(data.error);
+                    setSuccess(data.success);
+                }
+            }
             )
         });
     };
-
     return (
         <CardWrapper
             headerLabel="Welcome Back"
@@ -88,7 +99,7 @@ export const LoginForm = () => {
                             )}
                         />
                     </div>
-                    <FormError message={error} />
+                    <FormError message={error || urlError} />
                     <FormSuccess message={success} />
                     <Button
                         type="submit"
