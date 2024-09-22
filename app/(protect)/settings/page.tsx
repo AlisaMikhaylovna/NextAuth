@@ -18,7 +18,7 @@ const SettingsPage = async () => {
                 </button>
             </form>
             <div className="flex justify-center items-center">
-                <img src="89f9e11aca7a61f5db2ac315bb0aa3bb1942011.gif@!web-article-pic.webp" />
+                <img src="89f9e11aca7a61f5db2ac315bb0aa3bb1942011.gif@!web-article-pic.webp" alt="wula"/>
             </div>
         </div>
     );

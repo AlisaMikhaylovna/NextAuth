@@ -1,8 +1,11 @@
 import { LoginForm } from "@/components/auth/login-form";
+import { Suspense } from "react";
 
 function LoginPage() {
     return (
-        <LoginForm />
+        <Suspense>
+            <LoginForm />
+        </Suspense>
     );
 }
 
