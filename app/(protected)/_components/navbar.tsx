@@ -1,5 +1,6 @@
 "use client"
 
+import { UserButton } from "@/components/auth/user-button";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -13,19 +14,19 @@ export const NavBar = () => {
                     asChild
                     variant={pathname === "/server" ? "default" : "outline"}
                 >
-                    <Link href="/settings">Server</Link>
+                    <Link href="/server">Server</Link>
                 </Button>
                 <Button
                     asChild
                     variant={pathname === "/client" ? "default" : "outline"}
                 >
-                    <Link href="/settings">Client</Link>
+                    <Link href="/client">Client</Link>
                 </Button>
                 <Button
                     asChild
                     variant={pathname === "/admin" ? "default" : "outline"}
                 >
-                    <Link href="/settings">Admin</Link>
+                    <Link href="/admin">Admin</Link>
                 </Button>
                 <Button
                     asChild
@@ -34,7 +35,7 @@ export const NavBar = () => {
                     <Link href="/settings">Setting</Link>
                 </Button>
             </div>
-            <p>User BUtton</p>
+            <UserButton />
         </nav>
     );
 }
